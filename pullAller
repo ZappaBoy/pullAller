@@ -15,7 +15,7 @@ do
  	if [ ! -d "${file}" ] ; then
         	echo -e "${RED}${file}${NC} is a file"
     	else
-		cd $file
+		cd "$file"
         	if [ -d .git ]; then
 			echo -e "${GREEN}This is a Git Repository: .git found${NC}"
 			git pull
