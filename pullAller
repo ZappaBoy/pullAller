@@ -5,26 +5,27 @@
 # Define Color
 GREEN='\033[32m'
 WHITE='\033[37m'
-NC='\033[0m' 
-CIANO='\033[36m' 
+NC='\033[0m'
+CIANO='\033[36m'
 RED='\033[31m'
 
 function traverse() {
 for file in "$1"/*
 do
- 	if [ ! -d "${file}" ] ; then
-        	echo -e "${RED}${file}${NC} is a file"
-    	else
-		cd "$file"
-        	if [ -d .git ]; then
-			echo -e "${GREEN}This is a Git Repository: .git found${NC}"
-			git pull
-			cd ..
-		else
-		        echo -e "${WHITE}Entering recursion with: ${CIANO}${file}${NC}"        
-			traverse "${file}"
-	        fi;
-	fi;
+        if [ ! -d "${file}" ] ; then
+                echo -e "${RED}${file}${NC} is a file"
+        else
+                cd "$file"
+                if [ -d .git ]; then
+                        relative=$(echo "${file#"$1"}")
+                        echo -e "${GREEN}$relative is a Git Repository: .git found${NC}"
+                        git pull
+                        cd ..
+                else
+                        echo -e "${WHITE}Entering recursion with: ${CIANO}${file}${NC}"
+                        traverse "${file}"
+                fi;
+        fi;
 done
 }
 
