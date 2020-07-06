@@ -33,4 +33,6 @@ function main() {
 	traverse "$1"
 }
 
+git config --global credential.helper "cache --timeout=600"
 main "$(pwd)"
+git config --unset credential.helper
