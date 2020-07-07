@@ -33,6 +33,13 @@ function main() {
 	traverse "$1"
 }
 
-git config --global credential.helper "cache --timeout=600"
+git config credential.helper "cache --timeout=600"
 main "$(pwd)"
-git config --unset credential.helper
+
+finish() {
+    echo "--- FINISH ---"
+    git config credential.helper "cache --timeout=1"
+    git config --unset-all credential.helper
+}
+
+trap finish EXIT
